@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Video Game List</h1>
+
+{% for videogame in videogames %}
+<div class="card">
+  <a href="{% url 'detail' videogame.id %}">
+    <div class="card-content">
+      <span class="card-title">{{ videogame.title }}</span>
+      <p>Genre: {{ videogame.genre }}</p>
+      <p>Description: {{ videogame.description|linebreaks }}</p>
+      {% if videogame.release_year > 0 %}
+      <p>Release Year: {{ videogame.release_year }}</p>
+      {% else %}
+      <p>Release Year: Pre-historic</p>
+      {% endif %}
+    </div>
+  </a>
+</div>
+{% endfor %}
+
+{% endblock %}
