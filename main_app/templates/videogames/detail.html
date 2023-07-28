@@ -47,6 +47,55 @@
     </table>
   </div>
 </div>
+
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ videogame.name }}'s Streaming Platforms</h3>
+    {% if videogame.platforms.count %}
+    {% for platform in videogame.platforms.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          {{ platform.name }} at {{ platform.link }}
+        </span>
+      </div>
+      <div class="card-action">
+        <form action="{% url 'unassoc_platform' videogame.id platform.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Remove</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h5>No Streaming Platforms 😪</h5>
+    {% endif %}
+  </div>
+  <div class="col s6">
+    <h3>Available Platforms</h3>
+    {% if platforms.count %}
+      {% for platform in platforms.all %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            {{ platform.name }} at {{ platform.link }}
+          </span>
+        </div>
+        <div class="card-action">
+          <form action="{% url 'assoc_platform' videogame.id platform.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+    <h5>{{videogame.name}} Already Has All Platforms Available</h5>
+    {% endif %}
+  </div>
+</div>
+
 <script>
   const dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {
